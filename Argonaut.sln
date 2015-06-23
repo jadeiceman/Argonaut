@@ -8,6 +8,9 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Amqp.Store", "..\..\amqp\src\Amqp.Store.csproj", "{647AAC43-DC4A-47F0-8C07-E0DA2C312B30}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Resources", "Resources", "{9F041017-823A-4D31-A8C7-6A7F999F2E47}"
+	ProjectSection(SolutionItems) = preProject
+		Resources\images\AdafruitPixyPet.jpg = Resources\images\AdafruitPixyPet.jpg
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
