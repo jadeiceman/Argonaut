@@ -45,6 +45,30 @@
     <UseDotNetNativeToolchain>true</UseDotNetNativeToolchain>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="..\EventHub\Channels.cs">
+      <Link>EventHub\Channels.cs</Link>
+    </Compile>
+    <Compile Include="..\EventHub\EventHubClient.cs">
+      <Link>EventHub\EventHubClient.cs</Link>
+    </Compile>
+    <Compile Include="..\EventHub\EventHubSettings.cs">
+      <Link>EventHub\EventHubSettings.cs</Link>
+    </Compile>
+    <Compile Include="..\EventHub\EventReceiver.cs">
+      <Link>EventHub\EventReceiver.cs</Link>
+    </Compile>
+    <Compile Include="..\EventHub\EventSender.cs">
+      <Link>EventHub\EventSender.cs</Link>
+    </Compile>
+    <Compile Include="..\EventHub\LinkDescriptions.cs">
+      <Link>EventHub\LinkDescriptions.cs</Link>
+    </Compile>
+    <Compile Include="..\EventHub\LinkType.cs">
+      <Link>EventHub\LinkType.cs</Link>
+    </Compile>
+    <Compile Include="..\EventHub\Message.cs">
+      <Link>EventHub\Message.cs</Link>
+    </Compile>
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
@@ -107,9 +131,7 @@
       <Name>Amqp.Store</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="EventHub\" />
-  </ItemGroup>
+  <ItemGroup />
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>
