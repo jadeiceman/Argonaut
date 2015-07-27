@@ -33,8 +33,6 @@ namespace PixyPetRobot
 
         int PIXY_OUTBUF_SIZE = 1024;
 
-        long lastBlockTime = 0;
-
         public PixyCam()
         {
             outBytes = new Queue<byte>();
