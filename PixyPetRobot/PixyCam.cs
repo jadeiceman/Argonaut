@@ -256,7 +256,7 @@ namespace PixyPetRobot
             return send(new byte[] { 0x00, PIXY_LED_SYNC, r, g, b });
         }
 
-        public bool SetServos(UInt16 s0, UInt16 s1)
+        public bool SetServos(long s0, long s1)
         {
             byte[] s0Array = BitConverter.GetBytes(s0);
             byte[] s1Array = BitConverter.GetBytes(s1);
