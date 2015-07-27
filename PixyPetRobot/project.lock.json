@@ -2,7 +2,7 @@
   "locked": false,
   "version": 1,
   "targets": {
-    ".NETCore,Version=v5.0": {
+    "UAP,Version=v10.0": {
       "AMQPNetLite/1.1.0": {
         "compile": {
           "lib/windows8/Amqp.Store.dll": {}
@@ -1576,7 +1576,7 @@
         }
       }
     },
-    ".NETCore,Version=v5.0/win10-arm": {
+    "UAP,Version=v10.0/win10-arm": {
       "AMQPNetLite/1.1.0": {
         "compile": {
           "lib/windows8/Amqp.Store.dll": {}
@@ -3240,7 +3240,7 @@
         }
       }
     },
-    ".NETCore,Version=v5.0/win10-arm-aot": {
+    "UAP,Version=v10.0/win10-arm-aot": {
       "AMQPNetLite/1.1.0": {
         "compile": {
           "lib/windows8/Amqp.Store.dll": {}
@@ -4848,7 +4848,7 @@
         }
       }
     },
-    ".NETCore,Version=v5.0/win10-x86": {
+    "UAP,Version=v10.0/win10-x86": {
       "AMQPNetLite/1.1.0": {
         "compile": {
           "lib/windows8/Amqp.Store.dll": {}
@@ -6517,7 +6517,7 @@
         }
       }
     },
-    ".NETCore,Version=v5.0/win10-x86-aot": {
+    "UAP,Version=v10.0/win10-x86-aot": {
       "AMQPNetLite/1.1.0": {
         "compile": {
           "lib/windows8/Amqp.Store.dll": {}
@@ -8125,7 +8125,7 @@
         }
       }
     },
-    ".NETCore,Version=v5.0/win10-x64": {
+    "UAP,Version=v10.0/win10-x64": {
       "AMQPNetLite/1.1.0": {
         "compile": {
           "lib/windows8/Amqp.Store.dll": {}
@@ -9794,7 +9794,7 @@
         }
       }
     },
-    ".NETCore,Version=v5.0/win10-x64-aot": {
+    "UAP,Version=v10.0/win10-x64-aot": {
       "AMQPNetLite/1.1.0": {
         "compile": {
           "lib/windows8/Amqp.Store.dll": {}
@@ -14852,6 +14852,6 @@
       "Microsoft.ApplicationInsights.WindowsApps >= 1.0.0",
       "Microsoft.NETCore.UniversalWindowsPlatform >= 5.0.0"
     ],
-    ".NETCore,Version=v5.0": []
+    "UAP,Version=v10.0": []
   }
 }
