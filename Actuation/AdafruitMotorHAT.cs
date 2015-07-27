@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Actuation
 {
-    class PCA9685 : IDisposable
+    public class PCA9685 : IDisposable
     {
         private const byte MODE1 = 0x00;
         private const byte MODE2 = 0x01;
@@ -224,125 +224,5 @@ namespace Actuation
         private I2cDevice Dev;
         private I2cDevice GeneralCallDev;
         private int SlaveAddress;
-    }
-
-    public class AdafruitMotorHAT : IDisposable
-    {
-        const int PCA9685SlaveAddress = 0x60;
-
-        public enum MotorID
-        {
-            Motor1,
-            Motor2,
-            Motor3,
-            Motor4
-        }
-
-        public enum ExternalPwmChannel
-        {
-            Channel1 = 1,
-            Channel2 = 2,
-            Channel14 = 14,
-            Channel15 = 15
-        }
-
-        struct MotorConfig
-        {
-            public int PwmChannel;
-            public int IN1;
-            public int IN2;
-
-            public MotorConfig(int pwmChannel, int in1, int in2)
-            {
-                PwmChannel = pwmChannel;
-                IN1 = in1;
-                IN2 = in2;
-            }
-        }
-
-        static readonly MotorConfig[] Config = new MotorConfig[]
-        {
-            // M1
-            new MotorConfig(8, 10, 9),
-            // M2
-            new MotorConfig(13, 11, 12),
-            // M3
-            new MotorConfig(2, 4, 3),
-            // M4
-            new MotorConfig(7, 5, 6)
-        };
-
-        public AdafruitMotorHAT(int pwmFreq)
-        {
-            PwmFreq = pwmFreq;
-            PwmDriver = new PCA9685(PCA9685SlaveAddress);
-        }
-
-        public async Task Init()
-        {
-            await PwmDriver.Init();
-            PwmDriver.SetPwmFrequency(PwmFreq);
-            PwmDriver.SetAllChannelsDutyCycle(0.0f);
-        }
-
-        public void Forward(MotorID motor, float power)
-        {
-            Debug.WriteLine(
-                string.Format("{0} Forward {1}%",
-                    motor,
-                    power * 100.0f));
-
-            var motorConfig = Config[(int)motor];
-            WritePin(motorConfig.IN2, false);
-            WritePin(motorConfig.IN1, true);
-            PwmDriver.SetChannelDutyCycle(motorConfig.PwmChannel, power);
-        }
-
-        public void Backward(MotorID motor, float power)
-        {
-            Debug.WriteLine(
-                string.Format("{0} Backward {1}%",
-                    motor,
-                    power * 100.0f));
-
-            var motorConfig = Config[(int)motor];
-            WritePin(motorConfig.IN1, false);
-            WritePin(motorConfig.IN2, true);
-            PwmDriver.SetChannelDutyCycle(motorConfig.PwmChannel, power);
-        }
-
-        public void Coast(MotorID motor)
-        {
-            Debug.WriteLine(string.Format("{0} Coast", motor));
-
-            var motorConfig = Config[(int)motor];
-            WritePin(motorConfig.IN1, false);
-            WritePin(motorConfig.IN2, false);
-        }
-
-        public void SetExternalPwmChannelDutyCycle(ExternalPwmChannel channel, float dutyCycle)
-        {
-            PwmDriver.SetChannelDutyCycle((int)channel, dutyCycle);
-        }
-
-        public void Dispose()
-        {
-            if (PwmDriver != null)
-            {
-                PwmDriver.Dispose();
-                PwmDriver = null;
-            }
-        }
-
-        private void WritePin(int pin, bool value)
-        {
-            if (value)
-                PwmDriver.SetChannelDutyCycle(pin, 1.0f);
-            else
-                PwmDriver.SetChannelDutyCycle(pin, 0.0f);
-        }
-
-        private PCA9685 PwmDriver;
-        private int PwmFreq;
     }
 }
