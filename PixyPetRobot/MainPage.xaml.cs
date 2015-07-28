@@ -18,6 +18,7 @@ using Windows.UI.Xaml.Navigation;
 namespace PixyPetRobot
 {
     using Argonaut.Networking;
+    using Windows.System.Threading;
 
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
@@ -127,6 +128,11 @@ namespace PixyPetRobot
         private void PostStatus(string message)
         {
             StatusTxt.Text = message;
+        }
+
+        private void StartCameraBtn_Click(object sender, RoutedEventArgs e)
+        {
+            this.Frame.Navigate(typeof(CameraPage));
         }
     }
 }
