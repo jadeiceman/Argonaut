@@ -1,0 +1,11 @@
+﻿http://www.cmucam.org/projects/cmucam5/wiki/Porting_Guide
+http://ms-iot.github.io/content/en-US/win10/samples/PinMappingsRPi2.htm
+
+1				2
+MISO (RED)		5V
+
+3				4
+SCK				MOSI
+
+5				6
+<NOT USED>		GND

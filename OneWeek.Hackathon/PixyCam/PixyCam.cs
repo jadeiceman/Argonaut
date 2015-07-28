@@ -2,10 +2,11 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Windows.Devices.Enumeration;
-using Windows.Devices.Spi;
 
 namespace Argonaut.Sensors
 {
+    using Windows.Devices.Spi;
+
     public class PixyCamEventArgs : EventArgs
     {
         public ObjectBlock Block;
@@ -97,13 +98,13 @@ namespace Argonaut.Sensors
 
             if (outBytes.Count > 0)
             {
-                writeData[1] = PIXY_SYNC_BYTE_DATA;
-                writeData[0] = outBytes.Dequeue();
+                writeData[0] = PIXY_SYNC_BYTE_DATA;
+                writeData[1] = outBytes.Dequeue();
             }
             else
             {
-                writeData[1] = PIXY_SYNC_BYTE;
-                writeData[0] = 0x00;
+                writeData[0] = PIXY_SYNC_BYTE;
+                writeData[1] = 0x00;
             }
 
             Device.TransferFullDuplex(writeData, readData);
@@ -207,13 +208,13 @@ namespace Argonaut.Sensors
             {
                 if (outBytes.Count > 0)
                 {
-                    writeData[i] = outBytes.Dequeue();
-                    writeData[i + 1] = PIXY_SYNC_BYTE_DATA;
+                    writeData[i] = PIXY_SYNC_BYTE_DATA;
+                    writeData[i + 1] = outBytes.Dequeue();
                 }
                 else
                 {
-                    writeData[i] = 0x00;
-                    writeData[i + 1] = PIXY_SYNC_BYTE;
+                    writeData[i] = PIXY_SYNC_BYTE;
+                    writeData[i + 1] = 0x00;
                 }
             }
 
