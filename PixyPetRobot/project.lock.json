@@ -3,6 +3,45 @@
   "version": 1,
   "targets": {
     "UAP,Version=v10.0": {
+      "AMQPNetLite/1.1.0": {
+        "compile": {
+          "lib/windows8/Amqp.Store.dll": {}
+        },
+        "runtime": {
+          "lib/windows8/Amqp.Store.dll": {}
+        }
+      },
+      "Microsoft.ApplicationInsights/1.0.0": {
+        "compile": {
+          "lib/portable-win81+wpa81/Microsoft.ApplicationInsights.dll": {}
+        },
+        "runtime": {
+          "lib/portable-win81+wpa81/Microsoft.ApplicationInsights.dll": {}
+        }
+      },
+      "Microsoft.ApplicationInsights.PersistenceChannel/1.0.0": {
+        "dependencies": {
+          "Microsoft.ApplicationInsights": "[1.0.0, )"
+        },
+        "compile": {
+          "lib/portable-win81+wpa81/Microsoft.ApplicationInsights.PersistenceChannel.dll": {}
+        },
+        "runtime": {
+          "lib/portable-win81+wpa81/Microsoft.ApplicationInsights.PersistenceChannel.dll": {}
+        }
+      },
+      "Microsoft.ApplicationInsights.WindowsApps/1.0.0": {
+        "dependencies": {
+          "Microsoft.ApplicationInsights": "[1.0.0, )",
+          "Microsoft.ApplicationInsights.PersistenceChannel": "[1.0.0, )"
+        },
+        "compile": {
+          "lib/win81/Microsoft.ApplicationInsights.Extensibility.Windows.dll": {}
+        },
+        "runtime": {
+          "lib/win81/Microsoft.ApplicationInsights.Extensibility.Windows.dll": {}
+        }
+      },
       "Microsoft.CSharp/4.0.0": {
         "dependencies": {
           "System.Runtime": "[4.0.20, )",
@@ -1538,6 +1577,45 @@
       }
     },
     "UAP,Version=v10.0/win10-arm": {
+      "AMQPNetLite/1.1.0": {
+        "compile": {
+          "lib/windows8/Amqp.Store.dll": {}
+        },
+        "runtime": {
+          "lib/windows8/Amqp.Store.dll": {}
+        }
+      },
+      "Microsoft.ApplicationInsights/1.0.0": {
+        "compile": {
+          "lib/portable-win81+wpa81/Microsoft.ApplicationInsights.dll": {}
+        },
+        "runtime": {
+          "lib/portable-win81+wpa81/Microsoft.ApplicationInsights.dll": {}
+        }
+      },
+      "Microsoft.ApplicationInsights.PersistenceChannel/1.0.0": {
+        "dependencies": {
+          "Microsoft.ApplicationInsights": "[1.0.0, )"
+        },
+        "compile": {
+          "lib/portable-win81+wpa81/Microsoft.ApplicationInsights.PersistenceChannel.dll": {}
+        },
+        "runtime": {
+          "lib/portable-win81+wpa81/Microsoft.ApplicationInsights.PersistenceChannel.dll": {}
+        }
+      },
+      "Microsoft.ApplicationInsights.WindowsApps/1.0.0": {
+        "dependencies": {
+          "Microsoft.ApplicationInsights": "[1.0.0, )",
+          "Microsoft.ApplicationInsights.PersistenceChannel": "[1.0.0, )"
+        },
+        "compile": {
+          "lib/win81/Microsoft.ApplicationInsights.Extensibility.Windows.dll": {}
+        },
+        "runtime": {
+          "lib/win81/Microsoft.ApplicationInsights.Extensibility.Windows.dll": {}
+        }
+      },
       "Microsoft.CSharp/4.0.0": {
         "dependencies": {
           "System.Runtime": "[4.0.20, )",
@@ -3163,6 +3241,45 @@
       }
     },
     "UAP,Version=v10.0/win10-arm-aot": {
+      "AMQPNetLite/1.1.0": {
+        "compile": {
+          "lib/windows8/Amqp.Store.dll": {}
+        },
+        "runtime": {
+          "lib/windows8/Amqp.Store.dll": {}
+        }
+      },
+      "Microsoft.ApplicationInsights/1.0.0": {
+        "compile": {
+          "lib/portable-win81+wpa81/Microsoft.ApplicationInsights.dll": {}
+        },
+        "runtime": {
+          "lib/portable-win81+wpa81/Microsoft.ApplicationInsights.dll": {}
+        }
+      },
+      "Microsoft.ApplicationInsights.PersistenceChannel/1.0.0": {
+        "dependencies": {
+          "Microsoft.ApplicationInsights": "[1.0.0, )"
+        },
+        "compile": {
+          "lib/portable-win81+wpa81/Microsoft.ApplicationInsights.PersistenceChannel.dll": {}
+        },
+        "runtime": {
+          "lib/portable-win81+wpa81/Microsoft.ApplicationInsights.PersistenceChannel.dll": {}
+        }
+      },
+      "Microsoft.ApplicationInsights.WindowsApps/1.0.0": {
+        "dependencies": {
+          "Microsoft.ApplicationInsights": "[1.0.0, )",
+          "Microsoft.ApplicationInsights.PersistenceChannel": "[1.0.0, )"
+        },
+        "compile": {
+          "lib/win81/Microsoft.ApplicationInsights.Extensibility.Windows.dll": {}
+        },
+        "runtime": {
+          "lib/win81/Microsoft.ApplicationInsights.Extensibility.Windows.dll": {}
+        }
+      },
       "Microsoft.CSharp/4.0.0": {
         "dependencies": {
           "System.Runtime": "[4.0.20, )",
@@ -4732,6 +4849,45 @@
       }
     },
     "UAP,Version=v10.0/win10-x86": {
+      "AMQPNetLite/1.1.0": {
+        "compile": {
+          "lib/windows8/Amqp.Store.dll": {}
+        },
+        "runtime": {
+          "lib/windows8/Amqp.Store.dll": {}
+        }
+      },
+      "Microsoft.ApplicationInsights/1.0.0": {
+        "compile": {
+          "lib/portable-win81+wpa81/Microsoft.ApplicationInsights.dll": {}
+        },
+        "runtime": {
+          "lib/portable-win81+wpa81/Microsoft.ApplicationInsights.dll": {}
+        }
+      },
+      "Microsoft.ApplicationInsights.PersistenceChannel/1.0.0": {
+        "dependencies": {
+          "Microsoft.ApplicationInsights": "[1.0.0, )"
+        },
+        "compile": {
+          "lib/portable-win81+wpa81/Microsoft.ApplicationInsights.PersistenceChannel.dll": {}
+        },
+        "runtime": {
+          "lib/portable-win81+wpa81/Microsoft.ApplicationInsights.PersistenceChannel.dll": {}
+        }
+      },
+      "Microsoft.ApplicationInsights.WindowsApps/1.0.0": {
+        "dependencies": {
+          "Microsoft.ApplicationInsights": "[1.0.0, )",
+          "Microsoft.ApplicationInsights.PersistenceChannel": "[1.0.0, )"
+        },
+        "compile": {
+          "lib/win81/Microsoft.ApplicationInsights.Extensibility.Windows.dll": {}
+        },
+        "runtime": {
+          "lib/win81/Microsoft.ApplicationInsights.Extensibility.Windows.dll": {}
+        }
+      },
       "Microsoft.CSharp/4.0.0": {
         "dependencies": {
           "System.Runtime": "[4.0.20, )",
@@ -6362,6 +6518,45 @@
       }
     },
     "UAP,Version=v10.0/win10-x86-aot": {
+      "AMQPNetLite/1.1.0": {
+        "compile": {
+          "lib/windows8/Amqp.Store.dll": {}
+        },
+        "runtime": {
+          "lib/windows8/Amqp.Store.dll": {}
+        }
+      },
+      "Microsoft.ApplicationInsights/1.0.0": {
+        "compile": {
+          "lib/portable-win81+wpa81/Microsoft.ApplicationInsights.dll": {}
+        },
+        "runtime": {
+          "lib/portable-win81+wpa81/Microsoft.ApplicationInsights.dll": {}
+        }
+      },
+      "Microsoft.ApplicationInsights.PersistenceChannel/1.0.0": {
+        "dependencies": {
+          "Microsoft.ApplicationInsights": "[1.0.0, )"
+        },
+        "compile": {
+          "lib/portable-win81+wpa81/Microsoft.ApplicationInsights.PersistenceChannel.dll": {}
+        },
+        "runtime": {
+          "lib/portable-win81+wpa81/Microsoft.ApplicationInsights.PersistenceChannel.dll": {}
+        }
+      },
+      "Microsoft.ApplicationInsights.WindowsApps/1.0.0": {
+        "dependencies": {
+          "Microsoft.ApplicationInsights": "[1.0.0, )",
+          "Microsoft.ApplicationInsights.PersistenceChannel": "[1.0.0, )"
+        },
+        "compile": {
+          "lib/win81/Microsoft.ApplicationInsights.Extensibility.Windows.dll": {}
+        },
+        "runtime": {
+          "lib/win81/Microsoft.ApplicationInsights.Extensibility.Windows.dll": {}
+        }
+      },
       "Microsoft.CSharp/4.0.0": {
         "dependencies": {
           "System.Runtime": "[4.0.20, )",
@@ -7931,6 +8126,45 @@
       }
     },
     "UAP,Version=v10.0/win10-x64": {
+      "AMQPNetLite/1.1.0": {
+        "compile": {
+          "lib/windows8/Amqp.Store.dll": {}
+        },
+        "runtime": {
+          "lib/windows8/Amqp.Store.dll": {}
+        }
+      },
+      "Microsoft.ApplicationInsights/1.0.0": {
+        "compile": {
+          "lib/portable-win81+wpa81/Microsoft.ApplicationInsights.dll": {}
+        },
+        "runtime": {
+          "lib/portable-win81+wpa81/Microsoft.ApplicationInsights.dll": {}
+        }
+      },
+      "Microsoft.ApplicationInsights.PersistenceChannel/1.0.0": {
+        "dependencies": {
+          "Microsoft.ApplicationInsights": "[1.0.0, )"
+        },
+        "compile": {
+          "lib/portable-win81+wpa81/Microsoft.ApplicationInsights.PersistenceChannel.dll": {}
+        },
+        "runtime": {
+          "lib/portable-win81+wpa81/Microsoft.ApplicationInsights.PersistenceChannel.dll": {}
+        }
+      },
+      "Microsoft.ApplicationInsights.WindowsApps/1.0.0": {
+        "dependencies": {
+          "Microsoft.ApplicationInsights": "[1.0.0, )",
+          "Microsoft.ApplicationInsights.PersistenceChannel": "[1.0.0, )"
+        },
+        "compile": {
+          "lib/win81/Microsoft.ApplicationInsights.Extensibility.Windows.dll": {}
+        },
+        "runtime": {
+          "lib/win81/Microsoft.ApplicationInsights.Extensibility.Windows.dll": {}
+        }
+      },
       "Microsoft.CSharp/4.0.0": {
         "dependencies": {
           "System.Runtime": "[4.0.20, )",
@@ -9561,6 +9795,45 @@
       }
     },
     "UAP,Version=v10.0/win10-x64-aot": {
+      "AMQPNetLite/1.1.0": {
+        "compile": {
+          "lib/windows8/Amqp.Store.dll": {}
+        },
+        "runtime": {
+          "lib/windows8/Amqp.Store.dll": {}
+        }
+      },
+      "Microsoft.ApplicationInsights/1.0.0": {
+        "compile": {
+          "lib/portable-win81+wpa81/Microsoft.ApplicationInsights.dll": {}
+        },
+        "runtime": {
+          "lib/portable-win81+wpa81/Microsoft.ApplicationInsights.dll": {}
+        }
+      },
+      "Microsoft.ApplicationInsights.PersistenceChannel/1.0.0": {
+        "dependencies": {
+          "Microsoft.ApplicationInsights": "[1.0.0, )"
+        },
+        "compile": {
+          "lib/portable-win81+wpa81/Microsoft.ApplicationInsights.PersistenceChannel.dll": {}
+        },
+        "runtime": {
+          "lib/portable-win81+wpa81/Microsoft.ApplicationInsights.PersistenceChannel.dll": {}
+        }
+      },
+      "Microsoft.ApplicationInsights.WindowsApps/1.0.0": {
+        "dependencies": {
+          "Microsoft.ApplicationInsights": "[1.0.0, )",
+          "Microsoft.ApplicationInsights.PersistenceChannel": "[1.0.0, )"
+        },
+        "compile": {
+          "lib/win81/Microsoft.ApplicationInsights.Extensibility.Windows.dll": {}
+        },
+        "runtime": {
+          "lib/win81/Microsoft.ApplicationInsights.Extensibility.Windows.dll": {}
+        }
+      },
       "Microsoft.CSharp/4.0.0": {
         "dependencies": {
           "System.Runtime": "[4.0.20, )",
@@ -11131,6 +11404,97 @@
     }
   },
   "libraries": {
+    "AMQPNetLite/1.1.0": {
+      "sha512": "HMFRLvaC1HtE1MYDX5dg9ng8clFPoUwTVwKhQEydk6i2+/u9/2zZ9nQRbITjfxYrlRBgAGGBVCP7EYALHe6QxA==",
+      "type": "Package",
+      "files": [
+        "_rels/.rels",
+        "AMQPNetLite.nuspec",
+        "lib/net45/Amqp.Net.dll",
+        "lib/net45/Amqp.Net.pdb",
+        "lib/net35/Amqp.Net35.dll",
+        "lib/net35/Amqp.Net35.pdb",
+        "lib/netcf39/Amqp.NetCF39.dll",
+        "lib/netcf39/Amqp.NetCF39.pdb",
+        "lib/netcf39/DeployFileList.txt",
+        "lib/netmf42/Amqp.NetMF.dll",
+        "lib/netmf42/Amqp.NetMF.pdb",
+        "lib/netmf42/le/Amqp.NetMF.pdb",
+        "lib/netmf42/le/Amqp.NetMF.pdbx",
+        "lib/netmf42/le/Amqp.NetMF.pe",
+        "lib/netmf42/be/Amqp.NetMF.pdb",
+        "lib/netmf42/be/Amqp.NetMF.pdbx",
+        "lib/netmf42/be/Amqp.NetMF.pe",
+        "lib/netmf43/Amqp.NetMF.dll",
+        "lib/netmf43/Amqp.NetMF.pdb",
+        "lib/netmf43/le/Amqp.NetMF.pdb",
+        "lib/netmf43/le/Amqp.NetMF.pdbx",
+        "lib/netmf43/le/Amqp.NetMF.pe",
+        "lib/netmf43/be/Amqp.NetMF.pdb",
+        "lib/netmf43/be/Amqp.NetMF.pdbx",
+        "lib/netmf43/be/Amqp.NetMF.pe",
+        "lib/windows8/Amqp.Store.dll",
+        "lib/windows8/Amqp.Store.pdb",
+        "lib/windows8/Amqp.Store.pri",
+        "lib/windowsphone8/Amqp.WP.dll",
+        "lib/windowsphone8/Amqp.WP.pdb",
+        "lib/portable-netcore451+wpa81/Amqp.NetCore.dll",
+        "lib/portable-netcore451+wpa81/Amqp.NetCore.pdb",
+        "lib/portable-netcore451+wpa81/Amqp.NetCore.pri",
+        "package/services/metadata/core-properties/d850cf41b1f24143a0f675f8b1d5b605.psmdcp",
+        "[Content_Types].xml"
+      ]
+    },
+    "Microsoft.ApplicationInsights/1.0.0": {
+      "sha512": "HZ47/thX57SOuIivSvIbsR6L9CCb/Yt3IyB2i4KHmmNlf3DO+lqFwWIKDdbDNWKX+qh0Rg20/JSMPK0dwUsYYw==",
+      "type": "Package",
+      "files": [
+        "_rels/.rels",
+        "Microsoft.ApplicationInsights.nuspec",
+        "lib/net40/Microsoft.ApplicationInsights.dll",
+        "lib/net40/Microsoft.ApplicationInsights.XML",
+        "lib/net45/Microsoft.ApplicationInsights.dll",
+        "lib/net45/Microsoft.ApplicationInsights.XML",
+        "lib/wp8/Microsoft.ApplicationInsights.dll",
+        "lib/wp8/Microsoft.ApplicationInsights.XML",
+        "lib/portable-win81+wpa81/Microsoft.ApplicationInsights.dll",
+        "lib/portable-win81+wpa81/Microsoft.ApplicationInsights.XML",
+        "package/services/metadata/core-properties/b9e7bc7ab2454491af07046165ff01d0.psmdcp",
+        "[Content_Types].xml"
+      ]
+    },
+    "Microsoft.ApplicationInsights.PersistenceChannel/1.0.0": {
+      "sha512": "0qQXC+CtbyF2RPuld5pF74fxsnP6ml0LUnzQ6GL9AXXY64LPsLDsPUAymoUffo7LZvPDppZboTYX59TfVxKA7A==",
+      "type": "Package",
+      "files": [
+        "_rels/.rels",
+        "Microsoft.ApplicationInsights.PersistenceChannel.nuspec",
+        "lib/net40/Microsoft.ApplicationInsights.PersistenceChannel.dll",
+        "lib/net40/Microsoft.ApplicationInsights.PersistenceChannel.XML",
+        "lib/wp8/Microsoft.ApplicationInsights.PersistenceChannel.dll",
+        "lib/wp8/Microsoft.ApplicationInsights.PersistenceChannel.XML",
+        "lib/portable-win81+wpa81/Microsoft.ApplicationInsights.PersistenceChannel.dll",
+        "lib/portable-win8+wpa81/Microsoft.ApplicationInsights.PersistenceChannel.XML",
+        "package/services/metadata/core-properties/dc9ebba80e7343fdbd0a39a3cdeb672c.psmdcp",
+        "[Content_Types].xml"
+      ]
+    },
+    "Microsoft.ApplicationInsights.WindowsApps/1.0.0": {
+      "sha512": "fNCAjIwvbTV+G0dT14bgM5tptsqeSaKQaCrlq7QknOq1Xdm8ZmgsDYddMgXkvykyKLjWyU6fKuOpj6fsQJy+wQ==",
+      "type": "Package",
+      "files": [
+        "_rels/.rels",
+        "Microsoft.ApplicationInsights.WindowsApps.nuspec",
+        "lib/win81/Microsoft.ApplicationInsights.Extensibility.Windows.dll",
+        "lib/win81/Microsoft.ApplicationInsights.Extensibility.Windows.XML",
+        "lib/wp8/Microsoft.ApplicationInsights.Extensibility.Windows.dll",
+        "lib/wp8/Microsoft.ApplicationInsights.Extensibility.Windows.XML",
+        "lib/wpa81/Microsoft.ApplicationInsights.Extensibility.Windows.dll",
+        "lib/wpa81/Microsoft.ApplicationInsights.Extensibility.Windows.XML",
+        "package/services/metadata/core-properties/4f6f732debe548beaa1183418e8d65cc.psmdcp",
+        "[Content_Types].xml"
+      ]
+    },
     "Microsoft.CSharp/4.0.0": {
       "sha512": "ek68kIMAeEIpiK82SkIO6A6fLg3NY5ho306ijHl8HrIcgyaRzn2+yX+tIxkHL/Uq5TwWn2EhbLq+2V5ofrdcjg==",
       "type": "Package",
@@ -14482,6 +14846,10 @@
   },
   "projectFileDependencyGroups": {
     "": [
+      "AMQPNetLite >= 1.1.0",
+      "Microsoft.ApplicationInsights >= 1.0.0",
+      "Microsoft.ApplicationInsights.PersistenceChannel >= 1.0.0",
+      "Microsoft.ApplicationInsights.WindowsApps >= 1.0.0",
       "Microsoft.NETCore.UniversalWindowsPlatform >= 5.0.0"
     ],
     "UAP,Version=v10.0": []
