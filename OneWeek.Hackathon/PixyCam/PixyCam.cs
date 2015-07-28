@@ -2,10 +2,11 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Windows.Devices.Enumeration;
-using Windows.Devices.Spi;
 
 namespace Argonaut.Sensors
 {
+    using Windows.Devices.Spi;
+
     public class PixyCamEventArgs : EventArgs
     {
         public ObjectBlock Block;

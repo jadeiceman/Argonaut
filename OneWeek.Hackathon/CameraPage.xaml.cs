@@ -69,9 +69,11 @@ namespace OneWeek.Hackathon
                         if (blocks != null && blocks.Count > 0)
                         {
                             var trackedBlock = trackBlock(blocks.ToArray());
-                            followBlock(trackedBlock);
-
-                            updateUI(trackedBlock);
+                            if (trackedBlock != null)
+                            {
+                                followBlock(trackedBlock);
+                                updateUI(trackedBlock);
+                            }
                         }
                     }
 
@@ -116,14 +118,17 @@ namespace OneWeek.Hackathon
                 }
             }
 
-            long panError = X_CENTER - trackedBlock.X;
-            long tiltError = trackedBlock.Y - Y_CENTER;
+            if (trackedBlock != null)
+            {
+                long panError = X_CENTER - trackedBlock.X;
+                long tiltError = trackedBlock.Y - Y_CENTER;
 
-            panLoop.Update(panError);
-            tiltLoop.Update(tiltError);
-            pixyCam.SetServos(panLoop.Position, tiltLoop.Position);
+                panLoop.Update(panError);
+                tiltLoop.Update(tiltError);
+                pixyCam.SetServos(panLoop.Position, tiltLoop.Position);
 
-            oldBlock = trackedBlock;
+                oldBlock = trackedBlock;
+            }
             return trackedBlock;
         }
 
