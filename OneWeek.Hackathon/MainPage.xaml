@@ -13,5 +13,6 @@
         <Button x:Name="SendTemperatureUpdateBtn" Content="Send Temperature" Height="35" VerticalAlignment="Stretch" Width="200" Click="OnSendTemperatureUpdate" />
         <Button x:Name="SendIRUpdateBtn" Content="Send IR" Height="35" VerticalAlignment="Stretch" Width="200" Click="OnSendIRUpdate" />
         <Button x:Name="SendSonarUpdateBtn" Content="Send Sonar" Height="35" VerticalAlignment="Stretch" Width="200" Click="OnSendSonarUpdate" />
+        <Button x:Name="StartCameraBtn" Content="Start Pixy Cam" Height="35" VerticalAlignment="Stretch" Width="200" Click="StartCameraBtn_Click" />
     </StackPanel>
 </Page>

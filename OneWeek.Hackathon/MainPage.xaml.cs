@@ -128,5 +128,9 @@ namespace OneWeek.Hackathon
         {
             StatusTxt.Text = message;
         }
+        private void StartCameraBtn_Click(object sender, RoutedEventArgs e)
+        {
+            this.Frame.Navigate(typeof(CameraPage));
+        }
     }
 }
