@@ -27,9 +27,6 @@ namespace PixyPetRobot
     {
         EventHubSettings eventHubSettings;
         EventSender eventSender;
-        PixyCam pixyCam;
-        bool stopCameraThread = false;
-        bool isCameraThreadRunning = false;
 
         public MainPage()
         {
@@ -133,52 +130,9 @@ namespace PixyPetRobot
             StatusTxt.Text = message;
         }
 
-        private async void StartCameraBtn_Click(object sender, RoutedEventArgs e)
+        private void StartCameraBtn_Click(object sender, RoutedEventArgs e)
         {
-            if (pixyCam == null)
-            {
-                pixyCam = new PixyCam();
-
-                // Initialize camera
-                await pixyCam.Initialize();
-            }
-
-            if (!isCameraThreadRunning)
-            {
-                // Start reading data from camera
-                await ThreadPool.RunAsync((s) =>
-                {
-                    isCameraThreadRunning = true;
-
-                    while (!stopCameraThread)
-                    {
-                        var blocks = pixyCam.GetBlocks(10);
-
-                        if (blocks != null && blocks.Count > 0)
-                        {
-                            foreach (ObjectBlock block in blocks)
-                            {
-                                setOutputText("Block Information: " + Environment.NewLine + block.ToString());
-                            }
-                        }
-                    }
-
-                    isCameraThreadRunning = false;
-                });
-            }
-            else
-            {
-                setOutputText("Camera thread is already running!");
-            }
-        }
-
-        // Function that sets the output text on the UI thread
-        private async void setOutputText(string text)
-        {
-            await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
-            {
-                OutputTxt.Text = text;
-            });
+            this.Frame.Navigate(typeof(CameraPage));
         }
     }
 }
