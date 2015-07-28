@@ -2,12 +2,16 @@
     x:Class="OneWeek.Hackathon.MainPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:OneWeek.Hackathon"
+    xmlns:local="using:PixyPetRobot"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
-    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-
-    </Grid>
+    <StackPanel x:Name="ControlStack" Background="#FF8D6060">
+        <TextBlock x:Name="StatusTxt" Width="300" Height="35" Text="Click Initialize to get started!" HorizontalAlignment="Left" />
+        <Button x:Name="InitializeCannelsBtn" Content="Initalize" Height="35" VerticalAlignment="Stretch" Width="200" Click="InitializeClicked"/>
+        <Button x:Name="SendTemperatureUpdateBtn" Content="Send Temperature" Height="35" VerticalAlignment="Stretch" Width="200" Click="OnSendTemperatureUpdate" />
+        <Button x:Name="SendIRUpdateBtn" Content="Send IR" Height="35" VerticalAlignment="Stretch" Width="200" Click="OnSendIRUpdate" />
+        <Button x:Name="SendSonarUpdateBtn" Content="Send Sonar" Height="35" VerticalAlignment="Stretch" Width="200" Click="OnSendSonarUpdate" />
+    </StackPanel>
 </Page>

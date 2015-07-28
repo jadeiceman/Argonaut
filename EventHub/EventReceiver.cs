@@ -112,7 +112,7 @@ namespace Argonaut.Networking
             {
                 amqpMessage = channel.Link.Receive(this.ReceiveTimeoutMs);
             }
-            catch (Exception x)
+            catch (Exception)
             {
                 //Console.WriteLine(x.Message);
             }
