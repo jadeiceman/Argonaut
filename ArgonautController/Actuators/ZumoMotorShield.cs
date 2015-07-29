@@ -3,7 +3,7 @@ using System.Diagnostics;
 using System.Threading.Tasks;
 using Windows.Devices.Gpio;
 
-namespace Actuation
+namespace ArgonautController.Actuators
 {
     public class ZumoMotorShieldConfig
     {
@@ -110,9 +110,15 @@ namespace Actuation
         {
             if (PwmDriver != null)
             {
+                LeftMotorStop();
+                RightMotorStop();
+
                 PwmDriver.Dispose();
                 PwmDriver = null;
             }
+
+            LeftMotorDir.Dispose();
+            RightMotorDir.Dispose();
         }
 
         GpioPin LeftMotorDir;

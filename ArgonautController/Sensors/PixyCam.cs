@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Windows.Devices.Enumeration;
 
-namespace Argonaut.Sensors
+namespace ArgonautController.Sensors
 {
     using Windows.Devices.Spi;
 
@@ -37,7 +37,7 @@ namespace Argonaut.Sensors
             outBytes = new Queue<byte>();
         }
 
-        public async Task Initialize()
+        public async Task Init()
         {
             var spiAqs = SpiDevice.GetDeviceSelector();
             var devicesInfo = await DeviceInformation.FindAllAsync(spiAqs);
