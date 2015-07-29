@@ -4,7 +4,7 @@ using Windows.Devices.Enumeration;
 using System.Diagnostics;
 using System.Threading.Tasks;
 
-namespace Actuation
+namespace ArgonautController.Actuators
 {
     public class PCA9685 : IDisposable
     {

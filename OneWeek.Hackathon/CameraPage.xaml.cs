@@ -10,7 +10,7 @@ using Windows.UI.Xaml.Navigation;
 
 namespace OneWeek.Hackathon
 {
-    using Argonaut.Sensors;
+    using ArgonautController.Sensors;
 
     /// <summary>
     /// Camera page that does all the camera logic
@@ -50,7 +50,7 @@ namespace OneWeek.Hackathon
                 pixyCam = new PixyCam();
 
                 // Initialize camera
-                await pixyCam.Initialize();
+                await pixyCam.Init();
             }
 
             if (!isCameraThreadRunning)
