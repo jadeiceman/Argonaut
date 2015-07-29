@@ -4,6 +4,7 @@ using System.Diagnostics;
 using ArgonautController.Actuators;
 using ArgonautController;
 using System.Threading;
+using System;
 
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
@@ -35,6 +36,7 @@ namespace ArgonautControllerTest
             config.LeftPwmChannel = 0;
             config.RightPwmChannel = 1;
             config.PwmDriverSlaveAddress = 0x40;
+            config.BuzzerPwmChannel = 2;
 
             using (ZumoMotorShield motorDriver = new ZumoMotorShield(config))
             {
@@ -85,6 +87,7 @@ namespace ArgonautControllerTest
         {
             using (ObjectTrackingController controller = new ObjectTrackingController())
             {
+                controller.OnNewBlocksDetected += Controller_OnNewBlocksDetected;
                 await controller.Init();
                 var task = controller.RunAsync();
 
@@ -95,6 +98,16 @@ namespace ArgonautControllerTest
                 bool graceful = task.Wait(3000);
                 Debug.WriteLineIf(graceful, "Shutdown successfully");
                 Debug.WriteLineIf(!graceful, "Shutdown timedout");
+            }
+        }
+
+        private void Controller_OnNewBlocksDetected(object source, BlockDetectedEventArgs e)
+        {
+            var blocks = e.Blocks;
+            if (blocks != null && blocks.Count > 0)
+            {
+                var controller = source as ObjectTrackingController;
+                controller.motorDriver.Buzz(500f, 500);
             }
         }
     }

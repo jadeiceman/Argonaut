@@ -1,6 +1,7 @@
 ﻿using ArgonautController.Actuators;
 using ArgonautController.Sensors;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading.Tasks;
 using Windows.System.Threading;
@@ -17,6 +18,8 @@ namespace ArgonautController
 
         const int PIXY_X_MAX = 320;
         const int PIXY_Y_MAX = 200;
+
+        public event BlockDetectedEventHandler OnNewBlocksDetected;
 
         class ServoLoop
         {
@@ -64,6 +67,7 @@ namespace ArgonautController
             config.RightMotorDirPin = 5;
             config.LeftPwmChannel = 0;
             config.RightPwmChannel = 1;
+            config.BuzzerPwmChannel = 2;
             config.PwmDriverSlaveAddress = 0x40;
 
             watch = new Stopwatch();
@@ -99,6 +103,12 @@ namespace ArgonautController
 
                     if (blocks != null && blocks.Count > 0)
                     {
+                        // Notify listeners that new object blocks have been detected
+                        if (this.OnNewBlocksDetected != null)
+                        {
+                            this.OnNewBlocksDetected(this, new BlockDetectedEventArgs(blocks));
+                        }
+
                         var trackedBlock = trackBlock(blocks.ToArray());
                         if (trackedBlock != null)
                         {
@@ -241,8 +251,8 @@ namespace ArgonautController
             }
         }
 
-        ZumoMotorShield motorDriver;
-        PixyCam pixyCam;
+        public ZumoMotorShield motorDriver { get; set; }
+        public PixyCam pixyCam { get; set; }
         ServoLoop panLoop, tiltLoop;
         bool shutdown = false;
         ObjectBlock oldBlock;
@@ -251,4 +261,20 @@ namespace ArgonautController
         float fps = 0;
         Stopwatch watch;
     }
+
+    public delegate void BlockDetectedEventHandler(object source, BlockDetectedEventArgs e);
+
+    public class BlockDetectedEventArgs : EventArgs
+    {
+        public List<ObjectBlock> Blocks
+        {
+            get; set;
+        }
+        public BlockDetectedEventArgs(List<ObjectBlock> blocks)
+        {
+            Blocks = blocks;
+        }
+    }
+
+
 }
