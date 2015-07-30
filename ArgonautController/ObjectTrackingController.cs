@@ -112,30 +112,29 @@ namespace ArgonautController
                     if (diff > 20)
                     {
                         //Debug.WriteLine("Diff time: " + diff + "ms");
-                    var blocks = pixyCam.GetBlocks(10);
+                        var blocks = pixyCam.GetBlocks(10);
 
-                    if (blocks != null && blocks.Count > 0)
-                    {
-                        var trackedBlock = trackBlock(blocks);
-                        if (trackedBlock != null)
+                        if (blocks != null && blocks.Count > 0)
                         {
-                            followBlock(trackedBlock);
-                        }
+                            var trackedBlock = trackBlock(blocks);
+                            if (trackedBlock != null)
+                            {
+                                followBlock(trackedBlock);
+                            }
 
                             previousTime = watch.ElapsedMilliseconds;
+                            
+                            OnBlocksReceived(new ObjectBlocksEventArgs() { Blocks = blocks.ToArray() });
+                        }
+                        else oldBlock = null;
 
-                            // Commenting out UI debugging
-                            //OnBlocksReceived(new ObjectBlocksEventArgs() { Blocks = blocks.ToArray() });
+                        ++frameCount;
+                        fps = frameCount / (float)watch.Elapsed.TotalSeconds;
+
+                        Debug.WriteLineIf(
+                            watch.ElapsedMilliseconds % 5000 == 0,
+                            string.Format("{0}s: FPS={1}, Frame-time={2}ms", watch.Elapsed.TotalSeconds, fps, 1000.0f / fps));
                     }
-                    else oldBlock = null;
-
-                    ++frameCount;
-                    fps = frameCount / (float)watch.Elapsed.TotalSeconds;
-
-                    Debug.WriteLineIf(
-                        watch.ElapsedMilliseconds % 5000 == 0,
-                        string.Format("{0}s: FPS={1}, Frame-time={2}ms", watch.Elapsed.TotalSeconds, fps, 1000.0f / fps));
-                }
 
 
                     // If we lose sight of the object, start slowing down to a stop
@@ -297,7 +296,7 @@ namespace ArgonautController
         protected virtual void OnBlocksReceived(ObjectBlocksEventArgs e)
         {
             EventHandler<ObjectBlocksEventArgs> handler = BlocksReceived;
-            if(handler != null)
+            if (handler != null)
             {
                 handler(this, e);
             }
