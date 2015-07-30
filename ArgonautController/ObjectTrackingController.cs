@@ -111,19 +111,26 @@ namespace ArgonautController
                     long diff = watch.ElapsedMilliseconds - previousTime;
                     if (diff > 20)
                     {
-                        //Debug.WriteLine("Diff time: " + diff + "ms");
+                        Debug.WriteLine("Diff time: " + diff + "ms");
                         var blocks = pixyCam.GetBlocks(10);
 
                         if (blocks != null && blocks.Count > 0)
                         {
+                            pixyCam.SetLED(0, 255, 0);
+
+                            // Move camera servos to track object
                             var trackedBlock = trackBlock(blocks);
+
+                            // Move Zumo motors to follow object
                             if (trackedBlock != null)
                             {
                                 followBlock(trackedBlock);
                             }
 
+                            // Keep track of the time the last block came in
                             previousTime = watch.ElapsedMilliseconds;
                             
+                            // Fire event
                             OnBlocksReceived(new ObjectBlocksEventArgs() { Blocks = blocks.ToArray() });
                         }
                         else oldBlock = null;
@@ -140,12 +147,15 @@ namespace ArgonautController
                     // If we lose sight of the object, start slowing down to a stop
                     if (diff > 100)
                     {
+                        pixyCam.SetLED(255, 0, 0);
+
                         float currLeftPower = motorDriver.GetLeftMotorPower();
                         float currRightPower = motorDriver.GetRightMotorPower();
 
                         ZumoMotorDirection leftDir = motorDriver.GetLeftDir();
                         ZumoMotorDirection rightDir = motorDriver.GetRightDir();
 
+                        // Decelerate
                         motorDriver.SetLeftMotorPower(leftDir, Constrain(currLeftPower - 0.05f, 0, 1));
                         motorDriver.SetRightMotorPower(rightDir, Constrain(currRightPower - 0.05f, 0, 1));
                     }
