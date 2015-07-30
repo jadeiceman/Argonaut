@@ -20,14 +20,14 @@ namespace ArgonautController
     {
         public event EventHandler<ObjectBlocksEventArgs> BlocksReceived;
 
-        const long X_CENTER = 160;
-        const long Y_CENTER = 100;
         const long RCS_MIN_POS = 0;
         const long RCS_MAX_POS = 1000;
         const long RCS_CENTER_POS = ((RCS_MAX_POS - RCS_MIN_POS) / 2);
 
         const int PIXY_X_MAX = 320;
         const int PIXY_Y_MAX = 200;
+        const long PIXY_X_CENTER = PIXY_X_MAX / 2;
+        const long PIXY_Y_CENTER = PIXY_Y_MAX / 2;
 
         class ServoLoop
         {
@@ -197,8 +197,8 @@ namespace ArgonautController
 
             if (trackedBlock != null)
             {
-                long panError = X_CENTER - trackedBlock.X;
-                long tiltError = trackedBlock.Y - Y_CENTER;
+                long panError = PIXY_X_CENTER - trackedBlock.X;
+                long tiltError = trackedBlock.Y - PIXY_Y_CENTER;
                 panLoop.Update(panError);
                 tiltLoop.Update(tiltError);
                 pixyCam.SetServos(panLoop.Position, tiltLoop.Position);
