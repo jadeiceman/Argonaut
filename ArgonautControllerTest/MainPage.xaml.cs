@@ -87,7 +87,7 @@ namespace ArgonautControllerTest
         {
             using (ObjectTrackingController controller = new ObjectTrackingController())
             {
-                controller.OnNewBlocksDetected += Controller_OnNewBlocksDetected;
+                controller.BlocksReceived += Controller_OnNewBlocksDetected;
                 await controller.Init();
                 var task = controller.RunAsync();
 
@@ -101,10 +101,10 @@ namespace ArgonautControllerTest
             }
         }
 
-        private void Controller_OnNewBlocksDetected(object source, BlockDetectedEventArgs e)
+        private void Controller_OnNewBlocksDetected(object source, ObjectBlocksEventArgs e)
         {
             var blocks = e.Blocks;
-            if (blocks != null && blocks.Count > 0)
+            if (blocks != null && blocks.Length > 0)
             {
                 var controller = source as ObjectTrackingController;
                 controller.motorDriver.Buzz(500f, 500);

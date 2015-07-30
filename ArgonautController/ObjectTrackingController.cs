@@ -29,8 +29,6 @@ namespace ArgonautController
         const int PIXY_X_MAX = 320;
         const int PIXY_Y_MAX = 200;
 
-        public event BlockDetectedEventHandler OnNewBlocksDetected;
-
         class ServoLoop
         {
             public long Position;
@@ -96,13 +94,13 @@ namespace ArgonautController
             await pixyCam.Init();
         }
 
-        public Task RunAsync(CoreDispatcher dispatcher)
+        public Task RunAsync()
         {
             // Set LED to blue
             pixyCam.SetLED(0, 0, 255);
 
             // Start reading frames from camera
-            return dispatcher.RunAsync(CoreDispatcherPriority.High, () =>
+            return ThreadPool.RunAsync((s) =>
             {
                 Debug.WriteLine("Starting ObjectTracking loop");
                 long previousTime = 0;
@@ -170,41 +168,42 @@ namespace ArgonautController
             ObjectBlock trackedBlock = null;
             long maxSize = 0;
 
-            // Get this biggest block
-            ObjectBlock biggestBlock = blocks[0];
-            for (int index = 1; index < blocks.Count; ++index)
-            {
-                long newSize = blocks[index].Height * blocks[index].Width;
-                if (newSize > maxSize)
-                {
-                    biggestBlock = blocks[index];
-                    maxSize = newSize;
-                }
-           }
-
-            //// 3 cases:
-            //// 1: New block
-            //// 2: Same block
-            //// 3: Different block
-            //// Case 1 and 3 result in the biggest block being assigned as the tracked block
-
-            //// 1: New Block & different block
-            //if (oldBlock == null || oldBlock.Signature != biggestBlock.Signature)
-            //{
-            //    trackedBlock = biggestBlock;
-            //    oldBlock = biggestBlock;
-
-            //    // Notify listeners that new object blocks have been detected
-            //    if (this.OnNewBlocksDetected != null)
-            //    {
-            //        //this.OnNewBlocksDetected(this, new BlockDetectedEventArgs(blocks));
-            //    }
+            // Frederick's code
+            // // Get this biggest block
+            // ObjectBlock biggestBlock = blocks[0];
+            // for (int index = 1; index < blocks.Count; ++index)
+            // {
+            //     long newSize = blocks[index].Height * blocks[index].Width;
+            //     if (newSize > maxSize)
+            //     {
+            //         biggestBlock = blocks[index];
+            //         maxSize = newSize;
+            //     }
             //}
-            //// 2: Same block
-            //else if (oldBlock.Signature == biggestBlock.Signature)
-            //{
-            //    trackedBlock = oldBlock;
-            //}
+
+            // //// 3 cases:
+            // //// 1: New block
+            // //// 2: Same block
+            // //// 3: Different block
+            // //// Case 1 and 3 result in the biggest block being assigned as the tracked block
+
+            // //// 1: New Block & different block
+            // //if (oldBlock == null || oldBlock.Signature != biggestBlock.Signature)
+            // //{
+            // //    trackedBlock = biggestBlock;
+            // //    oldBlock = biggestBlock;
+
+            // //    // Notify listeners that new object blocks have been detected
+            // //    if (this.OnNewBlocksDetected != null)
+            // //    {
+            // //        //this.OnNewBlocksDetected(this, new BlockDetectedEventArgs(blocks));
+            // //    }
+            // //}
+            // //// 2: Same block
+            // //else if (oldBlock.Signature == biggestBlock.Signature)
+            // //{
+            // //    trackedBlock = oldBlock;
+            // //}
 
             foreach (ObjectBlock block in blocks)
             {
@@ -321,7 +320,7 @@ namespace ArgonautController
             }
         }
 
-        ZumoMotorShield motorDriver;
+        public ZumoMotorShield motorDriver;
         PixyCam pixyCam;
         ServoLoop panLoop, tiltLoop;
         bool shutdown = false;
@@ -331,20 +330,4 @@ namespace ArgonautController
         float fps = 0;
         Stopwatch watch;
     }
-
-    public delegate void BlockDetectedEventHandler(object source, BlockDetectedEventArgs e);
-
-    public class BlockDetectedEventArgs : EventArgs
-    {
-        public List<ObjectBlock> Blocks
-        {
-            get; set;
-        }
-        public BlockDetectedEventArgs(List<ObjectBlock> blocks)
-        {
-            Blocks = blocks;
-        }
-    }
-
-
 }

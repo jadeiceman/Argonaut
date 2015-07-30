@@ -58,7 +58,7 @@ namespace OneWeek.Hackathon
             {
                 controller.BlocksReceived += Controller_BlocksReceived;
                 await controller.Init();
-                await controller.RunAsync(Dispatcher);
+                await controller.RunAsync();
             }
         }
 
