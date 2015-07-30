@@ -3,12 +3,22 @@ using ArgonautController.Sensors;
 using System;
 using System.Diagnostics;
 using System.Threading.Tasks;
+using Windows.Foundation;
 using Windows.System.Threading;
+using Windows.UI;
+using Windows.UI.Core;
 
 namespace ArgonautController
 {
+    public class ObjectBlocksEventArgs : EventArgs
+    {
+        public ObjectBlock[] Blocks;
+    }
+
     public class ObjectTrackingController : IDisposable
     {
+        public event EventHandler<ObjectBlocksEventArgs> BlocksReceived;
+
         const long X_CENTER = 160;
         const long Y_CENTER = 100;
         const long RCS_MIN_POS = 0;
@@ -60,10 +70,10 @@ namespace ArgonautController
         {
             ZumoMotorShieldConfig config;
             config = new ZumoMotorShieldConfig();
-            config.LeftMotorDirPin = 4;
-            config.RightMotorDirPin = 5;
-            config.LeftPwmChannel = 0;
-            config.RightPwmChannel = 1;
+            config.LeftMotorDirPin = 5;
+            config.RightMotorDirPin = 4;
+            config.LeftPwmChannel = 1;
+            config.RightPwmChannel = 0;
             config.PwmDriverSlaveAddress = 0x40;
 
             watch = new Stopwatch();
@@ -82,36 +92,56 @@ namespace ArgonautController
             await pixyCam.Init();
         }
 
-        public Task RunAsync()
+        public Task RunAsync(CoreDispatcher dispatcher)
         {
             // Set LED to blue
             pixyCam.SetLED(0, 0, 255);
 
             // Start reading frames from camera
-            return ThreadPool.RunAsync((s) =>
+            return dispatcher.RunAsync(CoreDispatcherPriority.High, () =>
             {
                 Debug.WriteLine("Starting ObjectTracking loop");
+                long previousTime = 0;
 
                 watch.Start();
                 while (!shutdown)
                 {
-                    var blocks = pixyCam.GetBlocks(10);
-
-                    if (blocks != null && blocks.Count > 0)
+                    long diff = watch.ElapsedMilliseconds - previousTime;
+                    if (diff > 20)
                     {
-                        var trackedBlock = trackBlock(blocks.ToArray());
-                        if (trackedBlock != null)
+                        //Debug.WriteLine("Diff time: " + diff + "ms");
+                        var blocks = pixyCam.GetBlocks(10);
+
+                        if (blocks != null && blocks.Count > 0)
                         {
-                            followBlock(trackedBlock);
+                            var trackedBlock = trackBlock(blocks.ToArray());
+                            if (trackedBlock != null)
+                            {
+                                followBlock(trackedBlock);
+                            }
+
+                            previousTime = watch.ElapsedMilliseconds;
+
+                            // Commenting out UI debugging
+                            //OnBlocksReceived(new ObjectBlocksEventArgs() { Blocks = blocks.ToArray() });
                         }
+
+                        ++frameCount;
+                        fps = frameCount / (float)watch.Elapsed.TotalSeconds;
+
+                        Debug.WriteLineIf(
+                            watch.ElapsedMilliseconds % 5000 == 0,
+                            string.Format("{0}s: FPS={1}, Frame-time={2}ms", watch.Elapsed.TotalSeconds, fps, 1000.0f / fps));
                     }
 
-                    ++frameCount;
-                    fps = frameCount / (float)watch.Elapsed.TotalSeconds;
 
-                    Debug.WriteLineIf(
-                        watch.ElapsedMilliseconds % 5000 == 0,
-                        string.Format("{0}s: FPS={1}, Frame-time={2}ms", watch.Elapsed.TotalSeconds, fps, 1000.0f / fps));
+                    // If we lose sight of the object, start slowing down to a stop
+                    if (diff > 100)
+                    {
+                        float stopTime = 3000;
+                        motorDriver.SetLeftMotorPower(ZumoMotorDirection.Forward, (stopTime - diff) / stopTime);
+                        motorDriver.SetRightMotorPower(ZumoMotorDirection.Forward, (stopTime - diff) / stopTime);
+                    }
                 }
                 watch.Stop();
 
@@ -196,8 +226,8 @@ namespace ArgonautController
             else
                 rightDir = ZumoMotorDirection.Backward;
 
-            leftPower = Math.Abs(leftSpeed) / 400.0f;
-            rightPower = Math.Abs(rightSpeed) / 400.0f;
+            leftPower = Math.Abs(leftSpeed) / 500.0f;
+            rightPower = Math.Abs(rightSpeed) / 500.0f;
 
             Debug.WriteLine(
                 string.Format("followError={0}, size={1}, differential={2}, leftPower={3}, rightPower={4}",
@@ -238,6 +268,15 @@ namespace ArgonautController
             {
                 motorDriver.Dispose();
                 motorDriver = null;
+            }
+        }
+
+        protected virtual void OnBlocksReceived(ObjectBlocksEventArgs e)
+        {
+            EventHandler<ObjectBlocksEventArgs> handler = BlocksReceived;
+            if(handler != null)
+            {
+                handler(this, e);
             }
         }
 
