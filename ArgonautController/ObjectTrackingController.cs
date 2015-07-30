@@ -1,6 +1,7 @@
 ﻿using ArgonautController.Actuators;
 using ArgonautController.Sensors;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading.Tasks;
 using Windows.Foundation;
@@ -27,6 +28,8 @@ namespace ArgonautController
 
         const int PIXY_X_MAX = 320;
         const int PIXY_Y_MAX = 200;
+
+        public event BlockDetectedEventHandler OnNewBlocksDetected;
 
         class ServoLoop
         {
@@ -74,6 +77,7 @@ namespace ArgonautController
             config.RightMotorDirPin = 4;
             config.LeftPwmChannel = 1;
             config.RightPwmChannel = 0;
+            config.BuzzerPwmChannel = 2;
             config.PwmDriverSlaveAddress = 0x40;
 
             watch = new Stopwatch();
@@ -110,29 +114,30 @@ namespace ArgonautController
                     if (diff > 20)
                     {
                         //Debug.WriteLine("Diff time: " + diff + "ms");
-                        var blocks = pixyCam.GetBlocks(10);
+                    var blocks = pixyCam.GetBlocks(10);
 
-                        if (blocks != null && blocks.Count > 0)
+                    if (blocks != null && blocks.Count > 0)
+                    {
+                        var trackedBlock = trackBlock(blocks);
+                        if (trackedBlock != null)
                         {
-                            var trackedBlock = trackBlock(blocks.ToArray());
-                            if (trackedBlock != null)
-                            {
-                                followBlock(trackedBlock);
-                            }
+                            followBlock(trackedBlock);
+                        }
 
                             previousTime = watch.ElapsedMilliseconds;
 
                             // Commenting out UI debugging
                             //OnBlocksReceived(new ObjectBlocksEventArgs() { Blocks = blocks.ToArray() });
-                        }
-
-                        ++frameCount;
-                        fps = frameCount / (float)watch.Elapsed.TotalSeconds;
-
-                        Debug.WriteLineIf(
-                            watch.ElapsedMilliseconds % 5000 == 0,
-                            string.Format("{0}s: FPS={1}, Frame-time={2}ms", watch.Elapsed.TotalSeconds, fps, 1000.0f / fps));
                     }
+                    else oldBlock = null;
+
+                    ++frameCount;
+                    fps = frameCount / (float)watch.Elapsed.TotalSeconds;
+
+                    Debug.WriteLineIf(
+                        watch.ElapsedMilliseconds % 5000 == 0,
+                        string.Format("{0}s: FPS={1}, Frame-time={2}ms", watch.Elapsed.TotalSeconds, fps, 1000.0f / fps));
+                }
 
 
                     // If we lose sight of the object, start slowing down to a stop
@@ -160,10 +165,46 @@ namespace ArgonautController
         }
 
         // Track blocks via the Pixy pan/tilt mechanism
-        private ObjectBlock trackBlock(ObjectBlock[] blocks)
+        private ObjectBlock trackBlock(List<ObjectBlock> blocks)
         {
             ObjectBlock trackedBlock = null;
             long maxSize = 0;
+
+            // Get this biggest block
+            ObjectBlock biggestBlock = blocks[0];
+            for (int index = 1; index < blocks.Count; ++index)
+            {
+                long newSize = blocks[index].Height * blocks[index].Width;
+                if (newSize > maxSize)
+                {
+                    biggestBlock = blocks[index];
+                    maxSize = newSize;
+                }
+           }
+
+            //// 3 cases:
+            //// 1: New block
+            //// 2: Same block
+            //// 3: Different block
+            //// Case 1 and 3 result in the biggest block being assigned as the tracked block
+
+            //// 1: New Block & different block
+            //if (oldBlock == null || oldBlock.Signature != biggestBlock.Signature)
+            //{
+            //    trackedBlock = biggestBlock;
+            //    oldBlock = biggestBlock;
+
+            //    // Notify listeners that new object blocks have been detected
+            //    if (this.OnNewBlocksDetected != null)
+            //    {
+            //        //this.OnNewBlocksDetected(this, new BlockDetectedEventArgs(blocks));
+            //    }
+            //}
+            //// 2: Same block
+            //else if (oldBlock.Signature == biggestBlock.Signature)
+            //{
+            //    trackedBlock = oldBlock;
+            //}
 
             foreach (ObjectBlock block in blocks)
             {
@@ -290,4 +331,20 @@ namespace ArgonautController
         float fps = 0;
         Stopwatch watch;
     }
+
+    public delegate void BlockDetectedEventHandler(object source, BlockDetectedEventArgs e);
+
+    public class BlockDetectedEventArgs : EventArgs
+    {
+        public List<ObjectBlock> Blocks
+        {
+            get; set;
+        }
+        public BlockDetectedEventArgs(List<ObjectBlock> blocks)
+        {
+            Blocks = blocks;
+        }
+    }
+
+
 }
