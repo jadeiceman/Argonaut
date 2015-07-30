@@ -82,6 +82,9 @@ namespace ArgonautController.Actuators
                 LeftMotorDir.Write(GpioPinValue.High);
 
             PwmDriver.SetChannelDutyCycle(Config.LeftPwmChannel, power);
+
+            leftMotorPower = power;
+            leftDir = dir;
         }
 
         public void SetRightMotorPower(ZumoMotorDirection dir, float power)
@@ -94,6 +97,29 @@ namespace ArgonautController.Actuators
                 RightMotorDir.Write(GpioPinValue.High);
 
             PwmDriver.SetChannelDutyCycle(Config.RightPwmChannel, power);
+
+            rightMotorPower = power;
+            rightDir = dir;
+        }
+
+        public float GetLeftMotorPower()
+        {
+            return leftMotorPower;
+        }
+
+        public float GetRightMotorPower()
+        {
+            return rightMotorPower;
+        }
+
+        public ZumoMotorDirection GetLeftDir()
+        {
+            return leftDir;
+        }
+
+        public ZumoMotorDirection GetRightDir()
+        {
+            return rightDir;
         }
 
         public void LeftMotorStop()
@@ -139,5 +165,7 @@ namespace ArgonautController.Actuators
         GpioPin RightMotorDir;
         PCA9685 PwmDriver;
         ZumoMotorShieldConfig Config;
+        float leftMotorPower, rightMotorPower;
+        ZumoMotorDirection leftDir, rightDir;
     }
 }

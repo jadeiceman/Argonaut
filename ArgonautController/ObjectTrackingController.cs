@@ -141,9 +141,14 @@ namespace ArgonautController
                     // If we lose sight of the object, start slowing down to a stop
                     if (diff > 100)
                     {
-                        float stopTime = 3000;
-                        motorDriver.SetLeftMotorPower(ZumoMotorDirection.Forward, (stopTime - diff) / stopTime);
-                        motorDriver.SetRightMotorPower(ZumoMotorDirection.Forward, (stopTime - diff) / stopTime);
+                        float currLeftPower = motorDriver.GetLeftMotorPower();
+                        float currRightPower = motorDriver.GetRightMotorPower();
+
+                        ZumoMotorDirection leftDir = motorDriver.GetLeftDir();
+                        ZumoMotorDirection rightDir = motorDriver.GetRightDir();
+
+                        motorDriver.SetLeftMotorPower(leftDir, Constrain(currLeftPower - 0.05f, 0, 1));
+                        motorDriver.SetRightMotorPower(rightDir, Constrain(currRightPower - 0.05f, 0, 1));
                     }
                 }
                 watch.Stop();
@@ -167,43 +172,6 @@ namespace ArgonautController
         {
             ObjectBlock trackedBlock = null;
             long maxSize = 0;
-
-            // Frederick's code
-            // // Get this biggest block
-            // ObjectBlock biggestBlock = blocks[0];
-            // for (int index = 1; index < blocks.Count; ++index)
-            // {
-            //     long newSize = blocks[index].Height * blocks[index].Width;
-            //     if (newSize > maxSize)
-            //     {
-            //         biggestBlock = blocks[index];
-            //         maxSize = newSize;
-            //     }
-            //}
-
-            // //// 3 cases:
-            // //// 1: New block
-            // //// 2: Same block
-            // //// 3: Different block
-            // //// Case 1 and 3 result in the biggest block being assigned as the tracked block
-
-            // //// 1: New Block & different block
-            // //if (oldBlock == null || oldBlock.Signature != biggestBlock.Signature)
-            // //{
-            // //    trackedBlock = biggestBlock;
-            // //    oldBlock = biggestBlock;
-
-            // //    // Notify listeners that new object blocks have been detected
-            // //    if (this.OnNewBlocksDetected != null)
-            // //    {
-            // //        //this.OnNewBlocksDetected(this, new BlockDetectedEventArgs(blocks));
-            // //    }
-            // //}
-            // //// 2: Same block
-            // //else if (oldBlock.Signature == biggestBlock.Signature)
-            // //{
-            // //    trackedBlock = oldBlock;
-            // //}
 
             foreach (ObjectBlock block in blocks)
             {
@@ -283,6 +251,21 @@ namespace ArgonautController
 
         // Constrains number between lower and upper bounds (inclusive)
         public int Constrain(int num, int lower, int upper)
+        {
+            if (num <= lower)
+            {
+                return lower;
+            }
+            else if (num >= upper)
+            {
+                return upper;
+            }
+
+            return num;
+        }
+
+        // Constrains number between lower and upper bounds (inclusive)
+        public float Constrain(float num, float lower, float upper)
         {
             if (num <= lower)
             {
